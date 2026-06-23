@@ -32,7 +32,7 @@ public class Player extends Entity {
     // Imp Variables
 
     double speed = 3*Variables.SCALE;
-    Rectangle2D hitbox;
+    public Rectangle2D hitbox;
 
 
     public Player(KeyboardInput keyIn, TileManager tileMapManager) {
@@ -75,21 +75,9 @@ public class Player extends Entity {
     public void update() {
         updateCoordinates();
         updateGravity();
-        updateCollision();
         updateAnimationCycle();
         updateCurrentFrame();
         
-    }
-
-    private void updateCollision() {
-        int currentTileX = (int)hitbox.getX()/Variables.TILE_SIZE;
-        int currentTileY = (int)hitbox.getY()/Variables.TILE_SIZE;
-
-        System.out.println("X: " + currentTileX + "Y: " + currentTileY);
-        
-        if(tileManager.checkBlockCollidable(currentTileX, currentTileY+1)) {
-            System.out.println("Collision detected");
-        }
     }
 
     public void updateGravity() {
@@ -148,7 +136,7 @@ public class Player extends Entity {
             x-= speed;
         }
 
-        if(!Collisions.IsPositionValid(this)) {
+        if(!Collisions.IsPositionValid(this, tileManager)) {
             if(keyIn.down == true) {
                 y-= speed;
             } else if(keyIn.up == true) {
