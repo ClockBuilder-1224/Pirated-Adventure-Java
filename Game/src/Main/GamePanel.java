@@ -1,0 +1,87 @@
+package Main;
+
+import javax.swing.JPanel;
+
+import Utilz.GameFiles;
+import Utilz.Variables;
+
+import Entities.Player;
+import Input.KeyboardInput;
+import Background.TileManager;
+
+public class GamePanel extends JPanel implements Runnable {
+	
+	public Player player;
+    public Thread gameThread;
+	public KeyboardInput keyInput;
+	public GameFiles files;
+	public TileManager tileManager;
+	public int currentMapIndex = 0;
+
+    public GamePanel() {
+        this.setBackground(java.awt.Color.BLACK);
+        this.setPreferredSize(new java.awt.Dimension(Variables.WINDOW_WIDTH, Variables.WINDOW_HEIGHT));
+		this.setDoubleBuffered(true);
+		this.setFocusable(true);
+		
+		files = new GameFiles();
+		keyInput = new KeyboardInput();
+		this.addKeyListener(keyInput);
+		tileManager = new TileManager();
+        player = new Player(keyInput, tileManager);
+		
+    }
+
+    public void startGameThread() {
+        gameThread = new Thread(this);
+        gameThread.start();
+    }
+
+    @Override
+    public void run() {
+		double drawInterval = 1000000000/Variables.FPS;
+		long prevTime = System.nanoTime();
+		long currentTime;
+		double delta = 0;
+		int timer = 0;
+		int drawCount = 0;
+		
+		while(gameThread != null) {
+			currentTime = System.nanoTime();
+			
+			delta += (currentTime - prevTime) / drawInterval;
+			
+			timer += (currentTime - prevTime);
+			
+			prevTime = currentTime;
+			
+			if(delta >= 1) {
+				update();
+				repaint();
+				drawCount++;
+				delta--;
+			}
+			
+			if(timer >= 1000000000) {
+				System.out.println("FPS: " + drawCount);
+				drawCount = 0;
+				timer = 0;
+			}
+		}
+	}
+
+     public void update() {
+        player.update();
+
+    }
+
+    public void paint(java.awt.Graphics g) {
+        super.paint(g);
+		
+		g.drawImage(GameFiles.Background, 0, 0, Variables.WINDOW_WIDTH, Variables.WINDOW_HEIGHT, null);
+
+		tileManager.loadMap(g, currentMapIndex);
+		player.draw(g);
+    }
+    
+ }
