@@ -145,21 +145,20 @@ public class Player extends Entity {
 
     public void checkCollision() {
         if(!Collisions.IsPositionValid(this, tileManager)) {
-            int direction = Collisions.returnDirection(this, tileManager);
-            if(direction == 0) {
+            if(Collisions.CheckUp(this, tileManager)) {
                 y /= 32;
                 y += 1;
                 y *= 32;
                 y -= Variables.hitboxXOffset -4;
-            } else if(direction == 1) {
+            } if(Collisions.CheckDown(this, tileManager)) {
                 y /=32;
                 y *=32;
-            } else if(direction == 2) {
+            } if(Collisions.CheckLeft(this, tileManager)) {
                 x /= 32;
                 x+=1;
                 x *=32;
                 x -= Variables.hitboxXOffset;
-            } else if(direction == 3) {
+            } if(Collisions.CheckRight(this, tileManager)) {
                 x /= 32;
                 x *= 32;
                 x += Variables.hitboxXOffset+2;

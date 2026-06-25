@@ -23,27 +23,58 @@ public class Collisions {
         
     }
 
-    public static int returnDirection(Player plr, TileManager tileManageer) {
+
+    public static Boolean CheckUp(Player plr, TileManager tileManageer) {
         tileManager = tileManageer;
         
         Boolean TOP = checkTileLocation(plr.hitbox.getX(), plr.hitbox.getY(), plr.hitbox.getX() + plr.hitbox.getWidth(), plr.hitbox.getY());
-        Boolean Bottom = checkTileLocation(plr.hitbox.getX(), plr.hitbox.getY() + plr.hitbox.getHeight(), plr.hitbox.getX() + plr.hitbox.getWidth(), plr.hitbox.getY() + plr.hitbox.getHeight());
-        Boolean Left = checkTileLocation(plr.hitbox.getX(), plr.hitbox.getY(), plr.hitbox.getX(), plr.hitbox.getY() + plr.hitbox.getHeight());
-        Boolean Right = checkTileLocation(plr.hitbox.getX() + plr.hitbox.getWidth(), plr.hitbox.getY(), plr.hitbox.getX() + plr.hitbox.getWidth(), plr.hitbox.getY() + plr.hitbox.getHeight());
 
         if(TOP) {
-            return 0;
-        } else if(Bottom) {
-            return 1;
-        }  else if(Left) {
-            return 2;
-        }  else if(Right) {
-            return 3;
+            return true;
         } else {
-            return 5;
+            return false;
         }
         
     }
+
+    public static Boolean CheckDown(Player plr, TileManager tileManageer) {
+        tileManager = tileManageer;
+        
+        Boolean Bottom = checkTileLocation(plr.hitbox.getX(), plr.hitbox.getY() + plr.hitbox.getHeight(), plr.hitbox.getX() + plr.hitbox.getWidth(), plr.hitbox.getY() + plr.hitbox.getHeight());
+
+        if(Bottom) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+
+    public static Boolean CheckLeft(Player plr, TileManager tileManageer) {
+        tileManager = tileManageer;
+        
+        Boolean Left = checkTileLocation(plr.hitbox.getX(), plr.hitbox.getY(), plr.hitbox.getX(), plr.hitbox.getY() + plr.hitbox.getHeight());
+        
+        if(Left) {
+            return true;
+        } else {
+            return false;
+        }
+        
+    }
+
+    public static Boolean CheckRight(Player plr, TileManager tileManageer) {
+        tileManager = tileManageer;
+        
+        Boolean Right = checkTileLocation(plr.hitbox.getX() + plr.hitbox.getWidth(), plr.hitbox.getY(), plr.hitbox.getX() + plr.hitbox.getWidth(), plr.hitbox.getY() + plr.hitbox.getHeight());
+
+        if(Right) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
 
     private static Boolean checkTileLocation(double x, double y, double x2, double y2) {
         
