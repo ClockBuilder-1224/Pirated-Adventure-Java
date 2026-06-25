@@ -150,7 +150,7 @@ public class Player extends Entity {
                 y /= 32;
                 y += 1;
                 y *= 32;
-                y -= Variables.hitboxXOffset;
+                y -= Variables.hitboxXOffset -4;
             } else if(direction == 1) {
                 y /=32;
                 y *=32;
@@ -162,7 +162,7 @@ public class Player extends Entity {
             } else if(direction == 3) {
                 x /= 32;
                 x *= 32;
-                x += Variables.hitboxXOffset;
+                x += Variables.hitboxXOffset+2;
             }
         }
     }
