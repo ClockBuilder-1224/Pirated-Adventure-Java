@@ -2,6 +2,7 @@ package Entities;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -136,18 +137,12 @@ public class Player extends Entity {
             x-= speed;
         }
 
-        if(!Collisions.IsPositionValid(this, tileManager)) {
-            if(keyIn.down == true) {
-                y-= speed;
-            } else if(keyIn.up == true) {
-                y+= speed;
-            }
+        hitbox.setRect(x+Variables.hitboxXOffset, y+Variables.hitboxYOffset, Variables.hitboxWidth, Variables.hitboxHeight);
 
-            if(keyIn.right == true) {
-                x-= speed;
-            } else if(keyIn.left == true) {
-                x+= speed;
-            }
+        if(!Collisions.IsPositionValid(this, tileManager)) {
+            speed = 0;
+        } else {
+            speed = 3*Variables.SCALE;
         }
 
         hitbox.setRect(x+Variables.hitboxXOffset, y+Variables.hitboxYOffset, Variables.hitboxWidth, Variables.hitboxHeight);
