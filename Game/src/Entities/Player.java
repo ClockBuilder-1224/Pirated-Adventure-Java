@@ -2,7 +2,6 @@ package Entities;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
-import java.awt.Stroke;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 
@@ -139,13 +138,33 @@ public class Player extends Entity {
 
         hitbox.setRect(x+Variables.hitboxXOffset, y+Variables.hitboxYOffset, Variables.hitboxWidth, Variables.hitboxHeight);
 
-        if(!Collisions.IsPositionValid(this, tileManager)) {
-            speed = 0;
-        } else {
-            speed = 3*Variables.SCALE;
-        }
+        checkCollision();
 
         hitbox.setRect(x+Variables.hitboxXOffset, y+Variables.hitboxYOffset, Variables.hitboxWidth, Variables.hitboxHeight);
+    }
+
+    public void checkCollision() {
+        if(!Collisions.IsPositionValid(this, tileManager)) {
+            int direction = Collisions.returnDirection(this, tileManager);
+            if(direction == 0) {
+                y /= 32;
+                y += 1;
+                y *= 32;
+                y -= Variables.hitboxXOffset;
+            } else if(direction == 1) {
+                y /=32;
+                y *=32;
+            } else if(direction == 2) {
+                x /= 32;
+                x+=1;
+                x *=32;
+                x -= Variables.hitboxXOffset;
+            } else if(direction == 3) {
+                x /= 32;
+                x *= 32;
+                x += Variables.hitboxXOffset;
+            }
+        }
     }
 
     // player drawing
