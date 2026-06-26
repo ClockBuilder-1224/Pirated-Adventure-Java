@@ -29,6 +29,10 @@ public class Player extends Entity {
 
     TileManager tileManager;
 
+    Boolean prevIsOnAir = false;
+    int startingGravityVelocity = 16;
+    int currentGravirtyVelocity = 16;
+
     // Imp Variables
 
     double speed = 3*Variables.SCALE;
@@ -81,7 +85,21 @@ public class Player extends Entity {
     }
 
     public void updateGravity() {
-        // work on it later :)
+        Boolean isOnAir = Collisions.checkOnAir(this, tileManager);
+
+        System.out.println(isOnAir);
+
+        if(!isOnAir) {
+            if(prevIsOnAir != true) {
+                currentGravirtyVelocity = startingGravityVelocity;
+                y += currentGravirtyVelocity;
+            } else {
+                currentGravirtyVelocity += 2;
+                y += currentGravirtyVelocity;
+            }
+        }
+
+        
     }
 
     private void updateCurrentFrame() { // updating frames
@@ -136,9 +154,12 @@ public class Player extends Entity {
             x-= speed;
         }
 
+
         hitbox.setRect(x+Variables.hitboxXOffset, y+Variables.hitboxYOffset, Variables.hitboxWidth, Variables.hitboxHeight);
 
         checkCollision();
+
+
 
         hitbox.setRect(x+Variables.hitboxXOffset, y+Variables.hitboxYOffset, Variables.hitboxWidth, Variables.hitboxHeight);
     }

@@ -74,6 +74,16 @@ public class Collisions {
             return false;
         }
     }
+
+    public static Boolean checkOnAir(Player plr, TileManager tileManageer) {
+        tileManager = tileManageer;
+
+        int plrY = plr.y /32;
+        plrY += 2;
+        plrY *= 32;
+
+        return checkTileLocation(plr.x, plrY, plr.x, plrY);
+    }
     
 
     private static Boolean checkTileLocation(double x, double y, double x2, double y2) {
